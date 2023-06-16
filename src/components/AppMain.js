@@ -19,6 +19,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import { makeStyles } from "@material-ui/core";
 import { UserMenu } from "./userMenu/UserMenu";
 import { ReactComponent as Logo } from "../assets/icons/logo.svg";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   topDrawerContent: {
@@ -35,8 +36,11 @@ const useStyles = makeStyles((theme) => ({
   childrenData: {
     padding: theme.spacing(2),
     width: "100%",
-    height: "100%",
+    minHeight: "calc(100vh - 70px)",
     display: "flex",
+    marginLeft: "auto",
+    marginRight: "auto",
+    justifyContent: "flex-start",
     position: "relative",
     minWidth: ({childrenWidth}) => childrenWidth,
   },
@@ -47,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
   },
   logo: {
+    cursor: "pointer",
     width: 60,
     height: 60,
     "& path": {
@@ -70,14 +75,14 @@ export default function AppMain({ children }) {
     setOpen(true);
     setDrawerWidth(240);
   };
-
+  const navigate = useNavigate();
   const handleDrawerClose = () => {
     setOpen(false);
     setDrawerWidth(0);
   };
 
   return (
-    <Box sx={{ display: "flex", flexGrow: 1 }}>
+    <Box sx={{ display: "flex", flexGrow: 1, overflow: "hidden" }}>
       <CssBaseline />
       <MuiAppBar
         position="fixed"
@@ -97,7 +102,7 @@ export default function AppMain({ children }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
-            <Logo className={classes.logo} />
+            <Logo onClick={() => navigate("/")} className={classes.logo} />
           </Typography>
           <div className={classes.userMenu}>
             <UserMenu />
