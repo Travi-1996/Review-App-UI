@@ -1,17 +1,17 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setTitle } from "../../store/modules/user";
+import { AppConsts } from "../AppConsts";
 
 export const UserMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -23,6 +23,7 @@ export const UserMenu = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const dispatch = useDispatch();
   return (
     <React.Fragment>
       <Tooltip title="Account settings">
@@ -71,7 +72,13 @@ export const UserMenu = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={() => navigate("/my-account")}>
+        <MenuItem
+          onClick={() => {
+            console.log("test");
+            navigate("/my-account");
+            dispatch(setTitle("This is Profile"));
+          }}
+        >
           <Avatar /> My Account
         </MenuItem>
         <Divider />
@@ -81,7 +88,12 @@ export const UserMenu = () => {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={() => {
+            localStorage.removeItem(AppConsts.USER_INFO);
+            navigate("/login");
+          }}
+        >
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

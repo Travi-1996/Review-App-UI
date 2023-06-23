@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, { useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -20,6 +20,7 @@ import { makeStyles } from "@material-ui/core";
 import { UserMenu } from "./userMenu/UserMenu";
 import { ReactComponent as Logo } from "../assets/icons/logo.svg";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   topDrawerContent: {
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "auto",
     justifyContent: "flex-start",
     position: "relative",
-    minWidth: ({childrenWidth}) => childrenWidth,
+    minWidth: ({ childrenWidth }) => childrenWidth,
   },
   userMenu: {
     display: "flex",
@@ -66,10 +67,8 @@ const useStyles = makeStyles((theme) => ({
 export default function AppMain({ children }) {
   const [open, setOpen] = useState(false);
   const [drawerWidth, setDrawerWidth] = useState(0);
-  const headerRef = useRef()
-  console.log("🚀 ~ file: AppMain.js:66 ~ AppMain ~ headerRef:", headerRef)
-  const childrenWidth = (headerRef?.current?.offsetWidth || 1500) - 100
-  console.log("🚀 ~ file: AppMain.js:65 ~ AppMain ~ childrenWidth:", childrenWidth)
+  const headerRef = useRef();
+  const childrenWidth = (headerRef?.current?.offsetWidth || 1500) - 100;
   const classes = useStyles({ drawerWidth, childrenWidth });
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -80,7 +79,7 @@ export default function AppMain({ children }) {
     setOpen(false);
     setDrawerWidth(0);
   };
-
+  const title = useSelector((state) => state.user?.appTitle) || "Not worked";
   return (
     <Box sx={{ display: "flex", flexGrow: 1, overflow: "hidden" }}>
       <CssBaseline />
@@ -102,7 +101,16 @@ export default function AppMain({ children }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
-            <Logo onClick={() => navigate("/")} className={classes.logo} />
+            <Logo
+              onClick={() => {
+                navigate("/");
+              }}
+              className={classes.logo}
+            />
+          </Typography>
+
+          <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
+            {title}
           </Typography>
           <div className={classes.userMenu}>
             <UserMenu />

@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Profile = () => {
   const classes = useStyles();
-  const tags =  ["User Id", "First Name", "Last Name", "Email", "Phone", "Age", "DOB", "Sex", , "Address"]
+  const tags =  ["User Id", "First Name", "Last Name", "Email", "Phone", "Age", "DOB", "Sex", "Address"]
   return (
     <Grid xs={12} className={classes.profileContainer}>
       <Grid xs={4} className={classes.profileLeftContainer}>

@@ -2,22 +2,21 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { AppRoutes } from "./routes/AppRoutes";
-import AppMain from "./components/AppMain";
 import { BrowserRouter } from "react-router-dom";
-
+import { Provider } from "react-redux";
+import { getStore } from "./store";
+import { RVToastContainer } from "./components/alert/RVToastContainer";
+import { AppRoutes } from "./routes/AppRoutes";
+const store = await getStore();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AppMain>
-        <AppRoutes />
-      </AppMain>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <AppRoutes/>
+        <RVToastContainer/>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
